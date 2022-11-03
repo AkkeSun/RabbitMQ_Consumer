@@ -1,41 +1,25 @@
 package com.example.rabbitmq_consumer.module;
 
-import com.example.rabbitmq_consumer.domain.DataDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.amqp.core.ExchangeTypes;
-import org.springframework.amqp.rabbit.annotation.Exchange;
-import org.springframework.amqp.rabbit.annotation.Queue;
-import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class Module_A {
 
-/*    @RabbitListener(bindings = @QueueBinding(
-            exchange = @Exchange(name = "sunTest", type= ExchangeTypes.DIRECT), // exchange
-            key = "time-first", // routing key
-            value = @Queue(name="time-second") // queue name
-    ))*/
-    @RabbitListener(queues = "mail_1")
+   /*
+   // bindings 정보를 하나하나 적어줘도 되는데 번거롭다
+   @RabbitListener(bindings = @QueueBinding(
+            exchange = @Exchange(name = "myExchange", type= ExchangeTypes.DIRECT), // exchange
+            key = "mail_1_key", // routing key
+            value = @Queue(name="mail_1") // queue name
+    ))
+    */
+    @RabbitListener(queues = "mail_1") // 메시지가 오는것을 감시하는 역할
     public void getText(String msg) {
         System.out.println("[getText] mail_1 " + msg);
     }
-
-/*    @RabbitListener(bindings = @QueueBinding(
-            exchange = @Exchange(name = "dto", type= ExchangeTypes.DIRECT),  // exchang
-            key = "dto-first", // routing key
-            value = @Queue(name="dto-second") // queue name
-    ))
-    @SendTo("dto/dto-third")
-    */
-    @RabbitListener(queues = "mail_1")
-    public void getDto(DataDTO dto) {
-        System.out.println("   [getDto] mail_1 " + dto.toString());
-    }
-
 }
 
 
